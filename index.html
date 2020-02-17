@@ -31,12 +31,15 @@
 
   let hue = 0;
 
+  let direction = true;
+
   function draw(e) {
     if (!isDrawing) return;  // will stop the function from running when not clicked down
     console.log(e);
     // check out mother effing hsl for rainbow below
     ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
 
+    // ctx.lineWidth = hue;
 
     // below four lines cause line to start at 0, 0 and give a fan drawing effect
     ctx.beginPath();
@@ -44,7 +47,7 @@
     ctx.lineTo( e.offsetX, e.offsetY);
     ctx.stroke(); 
     // line width
-    ctx.lineWidth = 25;
+    // ctx.lineWidth = 25;
     // will draw line where mouse goes, auto joins to where you last leave off
     lastX = e.offsetX;
     lastY = e.offsetY;
@@ -58,6 +61,17 @@
     if (hue >= 360) {
       hue = 0
     };
+
+    if (ctx.lineWidth >= 100 || ctx.lineWidth <= 1) {
+      direction = !direction;
+    }
+    if (direction) {
+      ctx.lineWidth++;
+    } else {
+      ctx.lineWidth--;
+    }
+    
+    // ctx.lineWidth++;
 
   }
 
