@@ -10,7 +10,52 @@
 <script>
   // you don't draw on the canvas element
   const canvas = document.querySelector('#draw');
-  const ctx = 
+  // what you actually are "drawing" on (can be 2D or 3D - this project is 2D)
+  const ctx = canvas.getContext('2d');
+
+  // set canvas to default size of window
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  // create base settings
+  // color
+  ctx.strokeStyle = '#BADA55';
+  // more options for line end on MDN
+  ctx.lineJoin = 'round';
+  ctx.lineCap = 'round';
+
+  // only draws when the cursor is clicked down
+  let isDrawing = false;
+  let lastX = 0;
+  let lastY = 0;
+
+  function draw(e) {
+    if (!isDrawing) return;  // will stop the function from running when not clicked down
+    console.log(e);
+    // below four lines cause line to start at 0, 0 and give a fan drawing effect
+    ctx.beginPath();
+    ctx.moveTo (lastX, lastY);
+    ctx.lineTo( e.offsetX, e.offsetY);
+    ctx.stroke(); 
+    // will draw line where mouse goes, auto joins to where you last leave off
+    lastX = e.offsetX;
+    lastY = e.offsetY;
+    // to destructure an array, above can be written as
+    // [lastX , lastY] = [e.offsetX, e.offsetY];
+  }
+
+  // records where mouse is being moved around
+  canvas.addEventListener('mousedown', (e) => {
+    isDrawing = true;
+    [lastX , lastY] = [e.offsetX, e.offsetY];
+  });
+
+
+  canvas.addEventListener('mousemove', draw);
+  canvas.addEventListener('mouseup', () => isDrawing = false);
+  canvas.addEventListener('mouseout', () => isDrawing = false);
+
+
 </script>
 
 <style>
