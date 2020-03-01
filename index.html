@@ -23,6 +23,10 @@
   // more options for line end on MDN
   ctx.lineJoin = 'round';
   ctx.lineCap = 'round';
+  ctx.lineWidth = 50;
+
+  // allows a blending functionality of the lines when drawn and cross over each other
+  ctx.globalCompositeOperation = 'xor'; 
 
   // only draws when the cursor is clicked down
   let isDrawing = false;
@@ -62,11 +66,14 @@
       hue = 0
     };
 
-    if (ctx.lineWidth >= 100 || ctx.lineWidth <= 1) {
+    // adjusting the width of the line being drawn
+    if (ctx.lineWidth >= 50 || ctx.lineWidth <= 1) {
       direction = !direction;
     }
+    // instructs line to increase
     if (direction) {
       ctx.lineWidth++;
+    // instructs line to decrease
     } else {
       ctx.lineWidth--;
     }
